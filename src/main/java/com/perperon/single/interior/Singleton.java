@@ -3,7 +3,7 @@ package com.perperon.single.interior;
 /**
  * @author perperon
  * @date 2024/3/10
- * @apiNote
+ * @apiNote 静态内部类实现单例模式
  */
 public class Singleton {
     private Singleton() {}
