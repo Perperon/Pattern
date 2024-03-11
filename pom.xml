@@ -58,18 +58,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
-                <configuration>
-                    <mainClass>com.perperon.pattern.PatternApplication</mainClass>
-                    <skip>true</skip>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>repackage</id>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <layout>ZIP</layout>
+                    <finalName>${artifactId}</finalName>
+                    <mainClass>com.perperon.pattern.PatternApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
