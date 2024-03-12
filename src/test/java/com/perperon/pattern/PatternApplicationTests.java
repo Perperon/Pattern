@@ -121,9 +121,13 @@ class PatternApplicationTests {
      */
     @Test
     public void test7() {
+        // 创建Builder对象
         Builder builder = new ComputerBuilder();
+        // 创建Director对象，并将Builder对象传入
         Director director = new Director(builder);
 
+        // 调用Director对象的constructProduct方法，开始构建产品
         director.constructProduct();
     }
+
 }
