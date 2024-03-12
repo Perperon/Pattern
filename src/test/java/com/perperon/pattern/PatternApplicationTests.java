@@ -1,5 +1,12 @@
 package com.perperon.pattern;
 
+import com.perperon.factory.abs.Battery;
+import com.perperon.factory.abs.Car;
+import com.perperon.factory.abs.fac.CarFactory;
+import com.perperon.factory.abs.fac.impl.ElectricCarFactory;
+import com.perperon.factory.abs.fac.impl.GasolineCarFactory;
+import com.perperon.factory.eazy.Product;
+import com.perperon.factory.eazy.fac.ProductFactory;
 import com.perperon.observer.Observer;
 import com.perperon.observer.concrete.ConcreteObserver;
 import com.perperon.observer.concrete.ConcreteSubject;
@@ -42,6 +49,9 @@ class PatternApplicationTests {
         aliSmsService.send("Hello World【cglib动态代理】");
     }
 
+    /**
+     * 观察者模式测试
+     */
     @Test
     public void test4(){
         ConcreteSubject subject = new ConcreteSubject();
@@ -59,5 +69,47 @@ class PatternApplicationTests {
         subject.removeObserver(observer2);
 
         subject.notifyObservers("Hello again!");
+    }
+
+    /**
+     * 简单工厂设计模式测试
+     */
+    @Test
+    public void test5() {
+        Product productA = ProductFactory.createProduct("A");
+        if (productA != null) {
+            productA.use();
+        }
+
+        Product productB = ProductFactory.createProduct("B");
+        if (productB != null) {
+            productB.use();
+        }
+    }
+
+    /**
+     * 抽象工厂设计模式测试
+     */
+    @Test
+    public void test6() {
+        // 创建电动车工厂
+        CarFactory electricCarFactory = new ElectricCarFactory();
+
+        // 使用电动车工厂创建电动车和电池
+        Car electricCar = electricCarFactory.createCar();
+        Battery electricBattery = electricCarFactory.createBattery();
+
+        electricCar.drive();
+        electricBattery.charge();
+
+        // 创建汽油车工厂
+        CarFactory gasolineCarFactory = new GasolineCarFactory();
+
+        // 使用汽油车工厂创建汽油车和油箱
+        Car gasolineCar = gasolineCarFactory.createCar();
+        Battery gasolineTank = gasolineCarFactory.createBattery();
+
+        gasolineCar.drive();
+        gasolineTank.charge();
     }
 }
