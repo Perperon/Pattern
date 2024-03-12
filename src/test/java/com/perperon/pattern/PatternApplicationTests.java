@@ -1,5 +1,8 @@
 package com.perperon.pattern;
 
+import com.perperon.builder.Director;
+import com.perperon.builder.build.Builder;
+import com.perperon.builder.build.service.ComputerBuilder;
 import com.perperon.factory.abs.Battery;
 import com.perperon.factory.abs.Car;
 import com.perperon.factory.abs.fac.CarFactory;
@@ -111,5 +114,16 @@ class PatternApplicationTests {
 
         gasolineCar.drive();
         gasolineTank.charge();
+    }
+
+    /**
+     * 建造者模式测试
+     */
+    @Test
+    public void test7() {
+        Builder builder = new ComputerBuilder();
+        Director director = new Director(builder);
+
+        director.constructProduct();
     }
 }
