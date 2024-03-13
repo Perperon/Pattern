@@ -4,7 +4,7 @@ import com.perperon.builder.build.Builder;
 
 /**
  * @author dupengcheng
- * @date 2024-03-12
+ * @date 2024-03-12  建造者模式
  * @apiNote Director类来指导Builder构建产品
  */
 public class Director {

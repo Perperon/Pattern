@@ -19,12 +19,17 @@ import com.perperon.pattern.proxy.jdk.dynamic.SmsService;
 import com.perperon.pattern.proxy.jdk.dynamic.factory.JdkProxyFactory;
 import com.perperon.pattern.proxy.jdk.dynamic.impl.SmsServiceImpl;
 import com.perperon.pattern.proxy.state.proxy.SmsProxy;
+import com.perperon.thread.ThreadLocalExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Random;
 
 @SpringBootTest
 class PatternApplicationTests {
 
+    // 创建ThreadLocal实例
+    private static final ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
     /**
      *静态代理
      */
@@ -130,4 +135,61 @@ class PatternApplicationTests {
         director.constructProduct();
     }
 
+    /**
+     * ThreadLocal是Java中的一个类，它提供了线程局部变量。这些变量与其他普通变量的区别在于，
+     * 每一个访问该变量的线程都会有自己独立、初始化的变量副本。ThreadLocal变量通常用于保存用户的会话信息，
+     * 因为Web应用是基于多线程的，不同的线程可能会同时处理同一个用户的不同请求，因此不能使用全局变量来保存每个用户的会话信息，
+     * 而ThreadLocal就可以为每个线程提供一个独立的变量副本，从而避免数据混乱。
+     *
+     *简单的ThreadLocal使用示例，演示了如何在多线程环境中为每个线程保存独立的变量值
+     */
+    @Test
+    public void test8() throws InterruptedException {
+       /* // 创建并启动线程1
+        Thread thread1 = new Thread(() -> {
+            // 为线程1设置值
+            threadLocal.set(1);
+            try {
+                Thread.sleep(1000); // 假设线程1做一些工作
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // 获取并打印线程1的值
+            System.out.println(Thread.currentThread().getName() + " Value: " + threadLocal.get());
+        });
+
+        // 创建并启动线程2
+        Thread thread2 = new Thread(() -> {
+            // 为线程2设置值
+            threadLocal.set(2);
+            try {
+                Thread.sleep(1000); // 假设线程2做一些工作
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // 获取并打印线程2的值
+            System.out.println(Thread.currentThread().getName() + " Value: " + threadLocal.get());
+        });
+
+        // 启动线程
+        thread1.start();
+        thread2.start();
+
+        // 等待线程执行完成
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // 移除ThreadLocal中的值，避免内存泄漏
+        threadLocal.remove();*/
+        ThreadLocalExample obj = new ThreadLocalExample();
+        for(int i=0 ; i<10; i++){
+            Thread t = new Thread(obj, ""+i);
+            Thread.sleep(new Random().nextInt(1000));
+            t.start();
+        }
+    }
 }
