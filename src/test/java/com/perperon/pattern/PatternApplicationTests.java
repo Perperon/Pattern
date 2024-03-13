@@ -19,6 +19,10 @@ import com.perperon.pattern.proxy.jdk.dynamic.SmsService;
 import com.perperon.pattern.proxy.jdk.dynamic.factory.JdkProxyFactory;
 import com.perperon.pattern.proxy.jdk.dynamic.impl.SmsServiceImpl;
 import com.perperon.pattern.proxy.state.proxy.SmsProxy;
+import com.perperon.prototype.deep.Animal;
+import com.perperon.prototype.deep.Dog;
+import com.perperon.prototype.shallow.Address;
+import com.perperon.prototype.shallow.Person;
 import com.perperon.thread.ThreadLocalExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -133,6 +137,27 @@ class PatternApplicationTests {
 
         // 调用Director对象的constructProduct方法，开始构建产品
         director.constructProduct();
+    }
+
+    /**
+     * 原型模式
+     */
+    @Test
+    public void test9(){
+        //浅拷贝
+        Person person = new Person(new Address("张三"));
+        Person personCopy = person.clone();
+        System.out.println(person.getAddress());
+        System.out.println(personCopy.getAddress());
+        System.out.println(person.getAddress()==personCopy.getAddress());
+
+        //深拷贝
+        Animal animal = new Animal(new Dog("旺财"));
+        Animal animalClone = animal.clone();
+        System.out.println(animal.getDog());
+        System.out.println(animalClone.getDog());
+        System.out.println(animal.getDog() == animalClone.getDog());
+
     }
 
     /**
