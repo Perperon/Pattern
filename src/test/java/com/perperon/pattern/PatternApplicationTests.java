@@ -24,6 +24,8 @@ import com.perperon.factory.abs.fac.impl.ElectricCarFactory;
 import com.perperon.factory.abs.fac.impl.GasolineCarFactory;
 import com.perperon.factory.eazy.Product;
 import com.perperon.factory.eazy.fac.ProductFactory;
+import com.perperon.fly.Flyweight;
+import com.perperon.fly.factory.FlyweightFactory;
 import com.perperon.observer.Observer;
 import com.perperon.observer.concrete.ConcreteObserver;
 import com.perperon.observer.concrete.ConcreteSubject;
@@ -308,4 +310,19 @@ class PatternApplicationTests {
         System.out.println("Coffee with Milk and Sugar: " + coffee.getIngredients() + ", Cost: $" + coffee.getCost());
     }
 
+    /**
+     * 享元模式测试
+     */
+    @Test
+    public void test14() {
+        FlyweightFactory factory = new FlyweightFactory();
+
+        Flyweight flyweight1 = factory.getFlyweight("state1");
+        Flyweight flyweight2 = factory.getFlyweight("state2");
+        Flyweight flyweight3 = factory.getFlyweight("state1"); // 这个将是之前创建的flyweight1的复用
+
+        flyweight1.operation("extrinsicState1");
+        flyweight2.operation("extrinsicState2");
+        flyweight3.operation("extrinsicState3"); // 这个将复用flyweight1的内部状态
+    }
 }
