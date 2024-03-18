@@ -1,5 +1,9 @@
 package com.perperon.pattern;
 
+import com.perperon.adapter.Adaptee;
+import com.perperon.adapter.Target;
+import com.perperon.adapter.impl.AdapteeClass;
+import com.perperon.adapter.impl.Adapter;
 import com.perperon.builder.Director;
 import com.perperon.builder.build.Builder;
 import com.perperon.builder.build.service.ComputerBuilder;
@@ -216,5 +220,15 @@ class PatternApplicationTests {
             Thread.sleep(new Random().nextInt(1000));
             t.start();
         }
+    }
+
+    @Test
+    public void test10() {
+        // 创建适配者对象
+        Adaptee adaptee = new AdapteeClass();
+        // 创建适配器对象，传入适配者对象
+        Target target = new Adapter(adaptee);
+        // 客户端通过目标接口调用方法
+        target.request();
     }
 }
