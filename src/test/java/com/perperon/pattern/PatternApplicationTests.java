@@ -11,6 +11,8 @@ import com.perperon.bridge.circle.RedCircle;
 import com.perperon.builder.Director;
 import com.perperon.builder.build.Builder;
 import com.perperon.builder.build.service.ComputerBuilder;
+import com.perperon.composite.impl.Composite;
+import com.perperon.composite.impl.Leaf;
 import com.perperon.factory.abs.Battery;
 import com.perperon.factory.abs.Car;
 import com.perperon.factory.abs.fac.CarFactory;
@@ -255,4 +257,29 @@ class PatternApplicationTests {
         blueCircle.draw();
     }
 
+    /**
+     * 组合模式测试
+     */
+    @Test
+    public void test12() {
+        // 创建组合节点
+        Composite root = new Composite("Root");
+        // 创建叶子节点
+        Leaf leaf1 = new Leaf("Leaf 1");
+        Leaf leaf2 = new Leaf("Leaf 2");
+        // 将叶子节点添加到组合节点中
+        root.add(leaf1);
+        root.add(leaf2);
+        // 创建另一个组合节点
+        Composite composite1 = new Composite("Composite 1");
+        Leaf leaf3 = new Leaf("Leaf 3");
+        Leaf leaf4 = new Leaf("Leaf 4");
+        // 将叶子节点添加到组合节点中
+        composite1.add(leaf3);
+        composite1.add(leaf4);
+        // 将组合节点添加到根组合节点中
+        root.add(composite1);
+        // 执行操作
+        root.operation();
+    }
 }
