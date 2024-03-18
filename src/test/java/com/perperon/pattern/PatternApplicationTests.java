@@ -13,6 +13,10 @@ import com.perperon.builder.build.Builder;
 import com.perperon.builder.build.service.ComputerBuilder;
 import com.perperon.composite.impl.Composite;
 import com.perperon.composite.impl.Leaf;
+import com.perperon.decorator.Coffee;
+import com.perperon.decorator.dec.Milk;
+import com.perperon.decorator.dec.Sugar;
+import com.perperon.decorator.impl.SimpleCoffee;
 import com.perperon.factory.abs.Battery;
 import com.perperon.factory.abs.Car;
 import com.perperon.factory.abs.fac.CarFactory;
@@ -282,4 +286,26 @@ class PatternApplicationTests {
         // 执行操作
         root.operation();
     }
+
+    /**
+     * 装饰器模式测试
+     */
+    @Test
+    public void test13() {
+        // 创建一个简单的咖啡对象
+        Coffee coffee = new SimpleCoffee();
+        // 输出简单咖啡的成分和价格
+        System.out.println("Simple Coffee: " + coffee.getIngredients() + ", Cost: $" + coffee.getCost());
+
+        // 将咖啡对象装饰为加牛奶的咖啡
+        coffee = new Milk(coffee);
+        // 输出加牛奶的咖啡的成分和价格
+        System.out.println("Coffee with Milk: " + coffee.getIngredients() + ", Cost: $" + coffee.getCost());
+
+        // 将咖啡对象装饰为加牛奶和糖的咖啡
+        coffee = new Sugar(coffee);
+        // 输出加牛奶和糖的咖啡的成分和价格
+        System.out.println("Coffee with Milk and Sugar: " + coffee.getIngredients() + ", Cost: $" + coffee.getCost());
+    }
+
 }
