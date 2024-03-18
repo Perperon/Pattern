@@ -4,6 +4,10 @@ import com.perperon.adapter.Adaptee;
 import com.perperon.adapter.Target;
 import com.perperon.adapter.impl.AdapteeClass;
 import com.perperon.adapter.impl.Adapter;
+import com.perperon.bridge.Circle;
+import com.perperon.bridge.Shape;
+import com.perperon.bridge.circle.BlueCircle;
+import com.perperon.bridge.circle.RedCircle;
 import com.perperon.builder.Director;
 import com.perperon.builder.build.Builder;
 import com.perperon.builder.build.service.ComputerBuilder;
@@ -222,6 +226,9 @@ class PatternApplicationTests {
         }
     }
 
+    /**
+     * 适配器模式测试
+     */
     @Test
     public void test10() {
         // 创建适配者对象
@@ -231,4 +238,21 @@ class PatternApplicationTests {
         // 客户端通过目标接口调用方法
         target.request();
     }
+
+    /**
+     * 桥接模式测试
+     */
+    @Test
+    public void test11() {
+        // 创建一个红色的圆形对象
+        Shape redCircle = new Circle(new RedCircle());
+        // 调用红色圆形的绘制方法
+        redCircle.draw();
+
+        // 创建一个蓝色的圆形对象
+        Shape blueCircle = new Circle(new BlueCircle());
+        // 调用蓝色圆形的绘制方法
+        blueCircle.draw();
+    }
+
 }
