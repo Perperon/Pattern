@@ -24,5 +24,7 @@ public class ThreadLocalExample implements Runnable {
         formatter.set(new SimpleDateFormat());
 
         System.out.println("Thread Name= "+Thread.currentThread().getName()+" formatter = "+formatter.get().toPattern());
+        //防止内存泄露，ThreadLocal中的引用被置为null
+        formatter.remove();
     }
 }
