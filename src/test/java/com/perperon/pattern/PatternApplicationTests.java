@@ -34,6 +34,8 @@ import com.perperon.pattern.factory.eazy.Product;
 import com.perperon.pattern.factory.eazy.fac.ProductFactory;
 import com.perperon.pattern.fly.Flyweight;
 import com.perperon.pattern.fly.factory.FlyweightFactory;
+import com.perperon.pattern.interpreter.Context;
+import com.perperon.pattern.interpreter.Expression;
 import com.perperon.pattern.observer.Observer;
 import com.perperon.pattern.observer.concrete.ConcreteObserver;
 import com.perperon.pattern.observer.concrete.ConcreteSubject;
@@ -384,4 +386,20 @@ class PatternApplicationTests {
             // invoker.undoCommand();
         }
 
+    /**
+     * 解释器模式测试
+     */
+        @Test
+        public void test17() {
+            Context context = new Context();
+
+            Expression expression1 = context.parse("5 + 3");
+            System.out.println("Result of 5 + 3: " + expression1.interpret());
+
+            Expression expression2 = context.parse("10 - 4");
+            System.out.println("Result of 10 - 4: " + expression2.interpret());
+
+            Expression expression3 = context.parse("15");
+            System.out.println("Value of 15: " + expression3.interpret());
+        }
 }
