@@ -11,6 +11,10 @@ import com.perperon.pattern.bridge.circle.RedCircle;
 import com.perperon.pattern.builder.Director;
 import com.perperon.pattern.builder.build.Builder;
 import com.perperon.pattern.builder.build.service.ComputerBuilder;
+import com.perperon.pattern.chain.ChainHandler;
+import com.perperon.pattern.chain.Request;
+import com.perperon.pattern.chain.impl.ConcreteHandlerA;
+import com.perperon.pattern.chain.impl.ConcreteHandlerB;
 import com.perperon.pattern.composite.impl.Composite;
 import com.perperon.pattern.composite.impl.Leaf;
 import com.perperon.pattern.decorator.Coffee;
@@ -29,16 +33,16 @@ import com.perperon.pattern.fly.factory.FlyweightFactory;
 import com.perperon.pattern.observer.Observer;
 import com.perperon.pattern.observer.concrete.ConcreteObserver;
 import com.perperon.pattern.observer.concrete.ConcreteSubject;
+import com.perperon.pattern.prototype.deep.Animal;
+import com.perperon.pattern.prototype.deep.Dog;
+import com.perperon.pattern.prototype.shallow.Address;
+import com.perperon.pattern.prototype.shallow.Person;
 import com.perperon.pattern.proxy.cglib.dynamic.AliSmsService;
 import com.perperon.pattern.proxy.cglib.dynamic.factory.CglibProxyFactory;
 import com.perperon.pattern.proxy.jdk.dynamic.SmsService;
 import com.perperon.pattern.proxy.jdk.dynamic.factory.JdkProxyFactory;
 import com.perperon.pattern.proxy.jdk.dynamic.impl.SmsServiceImpl;
 import com.perperon.pattern.proxy.state.proxy.SmsProxy;
-import com.perperon.pattern.prototype.deep.Animal;
-import com.perperon.pattern.prototype.deep.Dog;
-import com.perperon.pattern.prototype.shallow.Address;
-import com.perperon.pattern.prototype.shallow.Person;
 import com.perperon.thread.ThreadLocalExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -325,4 +329,31 @@ class PatternApplicationTests {
         flyweight2.operation("extrinsicState2");
         flyweight3.operation("extrinsicState3"); // 这个将复用flyweight1的内部状态
     }
+
+        @Test
+        public void test15() {
+            // 创建ChainHandler类型的handlerA对象，并将其初始化为ConcreteHandlerA类的实例
+            ChainHandler handlerA = new ConcreteHandlerA(null);
+            // 创建ChainHandler类型的handlerB对象，并将其初始化为ConcreteHandlerB类的实例，同时将handlerA作为后继处理器
+            ChainHandler handlerB = new ConcreteHandlerB(handlerA);
+
+            // 创建Request类型的request1对象，并将其请求数据设置为"A"
+            Request request1 = new Request("A");
+            // 调用handlerB对象的handleRequest方法处理request1请求，并打印返回的响应数据
+            // 输出结果：Handled by ConcreteHandlerA
+            System.out.println(handlerB.handleRequest(request1).getResponseData());
+
+            // 创建Request类型的request2对象，并将其请求数据设置为"B"
+            Request request2 = new Request("B");
+            // 调用handlerB对象的handleRequest方法处理request2请求，并打印返回的响应数据
+            // 输出结果：Handled by ConcreteHandlerB
+            System.out.println(handlerB.handleRequest(request2).getResponseData());
+
+            // 创建Request类型的request3对象，并将其请求数据设置为"C"
+            Request request3 = new Request("C");
+            // 调用handlerB对象的handleRequest方法处理request3请求，并打印返回的响应数据
+            // 输出结果：Unhandled request
+            System.out.println(handlerB.handleRequest(request3).getResponseData());
+        }
+
 }
