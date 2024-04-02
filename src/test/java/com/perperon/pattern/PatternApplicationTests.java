@@ -386,20 +386,28 @@ class PatternApplicationTests {
             // invoker.undoCommand();
         }
 
-    /**
-     * 解释器模式测试
-     */
-        @Test
-        public void test17() {
-            Context context = new Context();
+        /**
+         * 解释器模式测试
+         */
+            @Test
+            public void test17() {
+                // 创建解释器上下文
+                Context context = new Context();
 
-            Expression expression1 = context.parse("5 + 3");
-            System.out.println("Result of 5 + 3: " + expression1.interpret());
+                // 解析表达式 "5 + 3"，并返回对应的表达式对象
+                Expression expression1 = context.parse("5 + 3");
+                // 输出表达式 "5 + 3" 的计算结果
+                System.out.println("Result of 5 + 3: " + expression1.interpret());
 
-            Expression expression2 = context.parse("10 - 4");
-            System.out.println("Result of 10 - 4: " + expression2.interpret());
+                // 解析表达式 "10 - 4"，并返回对应的表达式对象
+                Expression expression2 = context.parse("10 - 4");
+                // 输出表达式 "10 - 4" 的计算结果
+                System.out.println("Result of 10 - 4: " + expression2.interpret());
 
-            Expression expression3 = context.parse("15");
-            System.out.println("Value of 15: " + expression3.interpret());
-        }
+                // 解析表达式 "15"，并返回对应的表达式对象
+                Expression expression3 = context.parse("15");
+                // 输出表达式 "15" 的值
+                System.out.println("Value of 15: " + expression3.interpret());
+            }
+
 }
