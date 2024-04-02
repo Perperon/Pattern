@@ -15,6 +15,10 @@ import com.perperon.pattern.chain.ChainHandler;
 import com.perperon.pattern.chain.Request;
 import com.perperon.pattern.chain.impl.ConcreteHandlerA;
 import com.perperon.pattern.chain.impl.ConcreteHandlerB;
+import com.perperon.pattern.command.Command;
+import com.perperon.pattern.command.Invoker;
+import com.perperon.pattern.command.Receiver;
+import com.perperon.pattern.command.impl.ConcreteCommand;
 import com.perperon.pattern.composite.impl.Composite;
 import com.perperon.pattern.composite.impl.Leaf;
 import com.perperon.pattern.decorator.Coffee;
@@ -330,6 +334,9 @@ class PatternApplicationTests {
         flyweight3.operation("extrinsicState3"); // 这个将复用flyweight1的内部状态
     }
 
+    /**
+     * 责任链模式测试
+     */
         @Test
         public void test15() {
             // 创建ChainHandler类型的handlerA对象，并将其初始化为ConcreteHandlerA类的实例
@@ -354,6 +361,27 @@ class PatternApplicationTests {
             // 调用handlerB对象的handleRequest方法处理request3请求，并打印返回的响应数据
             // 输出结果：Unhandled request
             System.out.println(handlerB.handleRequest(request3).getResponseData());
+        }
+
+    /**
+     * 命令模式测试
+     */
+        @Test
+        public void test16() {
+            // 创建接收者对象
+            Receiver receiver = new Receiver();
+
+            // 创建具体命令对象，并将接收者对象传入
+            Command command = new ConcreteCommand(receiver);
+
+            // 创建调用者对象，并将命令对象传入
+            Invoker invoker = new Invoker(command);
+
+            // 执行命令
+            invoker.executeCommand();
+
+            // 撤销命令（如果支持的话）
+            // invoker.undoCommand();
         }
 
 }
