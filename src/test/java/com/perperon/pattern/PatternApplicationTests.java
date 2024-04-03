@@ -36,6 +36,8 @@ import com.perperon.pattern.fly.Flyweight;
 import com.perperon.pattern.fly.factory.FlyweightFactory;
 import com.perperon.pattern.interpreter.Context;
 import com.perperon.pattern.interpreter.Expression;
+import com.perperon.pattern.iterator.OIterator;
+import com.perperon.pattern.iterator.impl.ConcreteAggregate;
 import com.perperon.pattern.observer.Observer;
 import com.perperon.pattern.observer.concrete.ConcreteObserver;
 import com.perperon.pattern.observer.concrete.ConcreteSubject;
@@ -60,15 +62,17 @@ class PatternApplicationTests {
 
     // 创建ThreadLocal实例
     private static final ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+
     /**
-     *静态代理
+     * 静态代理
      */
     @Test
-    public void test1(){
+    public void test1() {
         SmsService smsService = new SmsServiceImpl();
         SmsProxy smsProxy = new SmsProxy(smsService);
         smsProxy.send("静态代理");
     }
+
     /**
      * jdk动态代理测试
      */
@@ -91,7 +95,7 @@ class PatternApplicationTests {
      * 观察者模式测试
      */
     @Test
-    public void test4(){
+    public void test4() {
         ConcreteSubject subject = new ConcreteSubject();
 
         Observer observer1 = new ConcreteObserver("Observer 1");
@@ -169,13 +173,13 @@ class PatternApplicationTests {
      * 原型模式
      */
     @Test
-    public void test9(){
+    public void test9() {
         //浅拷贝
         Person person = new Person(new Address("张三"));
         Person personCopy = person.clone();
         System.out.println(person.getAddress());
         System.out.println(personCopy.getAddress());
-        System.out.println(person.getAddress()==personCopy.getAddress());
+        System.out.println(person.getAddress() == personCopy.getAddress());
 
         //深拷贝
         Animal animal = new Animal(new Dog("旺财"));
@@ -191,8 +195,8 @@ class PatternApplicationTests {
      * 每一个访问该变量的线程都会有自己独立、初始化的变量副本。ThreadLocal变量通常用于保存用户的会话信息，
      * 因为Web应用是基于多线程的，不同的线程可能会同时处理同一个用户的不同请求，因此不能使用全局变量来保存每个用户的会话信息，
      * 而ThreadLocal就可以为每个线程提供一个独立的变量副本，从而避免数据混乱。
-     *
-     *简单的ThreadLocal使用示例，演示了如何在多线程环境中为每个线程保存独立的变量值
+     * <p>
+     * 简单的ThreadLocal使用示例，演示了如何在多线程环境中为每个线程保存独立的变量值
      */
     @Test
     public void test8() throws InterruptedException {
@@ -237,8 +241,8 @@ class PatternApplicationTests {
         // 移除ThreadLocal中的值，避免内存泄漏
         threadLocal.remove();*/
         ThreadLocalExample obj = new ThreadLocalExample();
-        for(int i=0 ; i<10; i++){
-            Thread t = new Thread(obj, ""+i);
+        for (int i = 0; i < 10; i++) {
+            Thread t = new Thread(obj, "" + i);
             Thread.sleep(new Random().nextInt(1000));
             t.start();
         }
@@ -339,75 +343,91 @@ class PatternApplicationTests {
     /**
      * 责任链模式测试
      */
-        @Test
-        public void test15() {
-            // 创建ChainHandler类型的handlerA对象，并将其初始化为ConcreteHandlerA类的实例
-            ChainHandler handlerA = new ConcreteHandlerA(null);
-            // 创建ChainHandler类型的handlerB对象，并将其初始化为ConcreteHandlerB类的实例，同时将handlerA作为后继处理器
-            ChainHandler handlerB = new ConcreteHandlerB(handlerA);
+    @Test
+    public void test15() {
+        // 创建ChainHandler类型的handlerA对象，并将其初始化为ConcreteHandlerA类的实例
+        ChainHandler handlerA = new ConcreteHandlerA(null);
+        // 创建ChainHandler类型的handlerB对象，并将其初始化为ConcreteHandlerB类的实例，同时将handlerA作为后继处理器
+        ChainHandler handlerB = new ConcreteHandlerB(handlerA);
 
-            // 创建Request类型的request1对象，并将其请求数据设置为"A"
-            Request request1 = new Request("A");
-            // 调用handlerB对象的handleRequest方法处理request1请求，并打印返回的响应数据
-            // 输出结果：Handled by ConcreteHandlerA
-            System.out.println(handlerB.handleRequest(request1).getResponseData());
+        // 创建Request类型的request1对象，并将其请求数据设置为"A"
+        Request request1 = new Request("A");
+        // 调用handlerB对象的handleRequest方法处理request1请求，并打印返回的响应数据
+        // 输出结果：Handled by ConcreteHandlerA
+        System.out.println(handlerB.handleRequest(request1).getResponseData());
 
-            // 创建Request类型的request2对象，并将其请求数据设置为"B"
-            Request request2 = new Request("B");
-            // 调用handlerB对象的handleRequest方法处理request2请求，并打印返回的响应数据
-            // 输出结果：Handled by ConcreteHandlerB
-            System.out.println(handlerB.handleRequest(request2).getResponseData());
+        // 创建Request类型的request2对象，并将其请求数据设置为"B"
+        Request request2 = new Request("B");
+        // 调用handlerB对象的handleRequest方法处理request2请求，并打印返回的响应数据
+        // 输出结果：Handled by ConcreteHandlerB
+        System.out.println(handlerB.handleRequest(request2).getResponseData());
 
-            // 创建Request类型的request3对象，并将其请求数据设置为"C"
-            Request request3 = new Request("C");
-            // 调用handlerB对象的handleRequest方法处理request3请求，并打印返回的响应数据
-            // 输出结果：Unhandled request
-            System.out.println(handlerB.handleRequest(request3).getResponseData());
-        }
+        // 创建Request类型的request3对象，并将其请求数据设置为"C"
+        Request request3 = new Request("C");
+        // 调用handlerB对象的handleRequest方法处理request3请求，并打印返回的响应数据
+        // 输出结果：Unhandled request
+        System.out.println(handlerB.handleRequest(request3).getResponseData());
+    }
 
     /**
      * 命令模式测试
      */
-        @Test
-        public void test16() {
-            // 创建接收者对象
-            Receiver receiver = new Receiver();
+    @Test
+    public void test16() {
+        // 创建接收者对象
+        Receiver receiver = new Receiver();
 
-            // 创建具体命令对象，并将接收者对象传入
-            Command command = new ConcreteCommand(receiver);
+        // 创建具体命令对象，并将接收者对象传入
+        Command command = new ConcreteCommand(receiver);
 
-            // 创建调用者对象，并将命令对象传入
-            Invoker invoker = new Invoker(command);
+        // 创建调用者对象，并将命令对象传入
+        Invoker invoker = new Invoker(command);
 
-            // 执行命令
-            invoker.executeCommand();
+        // 执行命令
+        invoker.executeCommand();
 
-            // 撤销命令（如果支持的话）
-            // invoker.undoCommand();
+        // 撤销命令（如果支持的话）
+        // invoker.undoCommand();
+    }
+
+    /**
+     * 解释器模式测试
+     */
+    @Test
+    public void test17() {
+        // 创建解释器上下文
+        Context context = new Context();
+
+        // 解析表达式 "5 + 3"，并返回对应的表达式对象
+        Expression expression1 = context.parse("5 + 3");
+        // 输出表达式 "5 + 3" 的计算结果
+        System.out.println("Result of 5 + 3: " + expression1.interpret());
+
+        // 解析表达式 "10 - 4"，并返回对应的表达式对象
+        Expression expression2 = context.parse("10 - 4");
+        // 输出表达式 "10 - 4" 的计算结果
+        System.out.println("Result of 10 - 4: " + expression2.interpret());
+
+        // 解析表达式 "15"，并返回对应的表达式对象
+        Expression expression3 = context.parse("15");
+        // 输出表达式 "15" 的值
+        System.out.println("Value of 15: " + expression3.interpret());
+    }
+
+    /**
+     * 迭代器模式测试
+     */
+    @Test
+    public void test18() {
+        ConcreteAggregate aggregate = new ConcreteAggregate();
+        aggregate.add("Element 1");
+        aggregate.add("Element 2");
+        aggregate.add("Element 3");
+
+        OIterator iterator = aggregate.creatIterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
         }
-
-        /**
-         * 解释器模式测试
-         */
-            @Test
-            public void test17() {
-                // 创建解释器上下文
-                Context context = new Context();
-
-                // 解析表达式 "5 + 3"，并返回对应的表达式对象
-                Expression expression1 = context.parse("5 + 3");
-                // 输出表达式 "5 + 3" 的计算结果
-                System.out.println("Result of 5 + 3: " + expression1.interpret());
-
-                // 解析表达式 "10 - 4"，并返回对应的表达式对象
-                Expression expression2 = context.parse("10 - 4");
-                // 输出表达式 "10 - 4" 的计算结果
-                System.out.println("Result of 10 - 4: " + expression2.interpret());
-
-                // 解析表达式 "15"，并返回对应的表达式对象
-                Expression expression3 = context.parse("15");
-                // 输出表达式 "15" 的值
-                System.out.println("Value of 15: " + expression3.interpret());
-            }
+    }
 
 }
