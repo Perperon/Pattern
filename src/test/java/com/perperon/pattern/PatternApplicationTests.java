@@ -38,6 +38,10 @@ import com.perperon.pattern.interpreter.Context;
 import com.perperon.pattern.interpreter.Expression;
 import com.perperon.pattern.iterator.OIterator;
 import com.perperon.pattern.iterator.impl.ConcreteAggregate;
+import com.perperon.pattern.mediator.Colleague;
+import com.perperon.pattern.mediator.Mediator;
+import com.perperon.pattern.mediator.impl.ConcreteColleague;
+import com.perperon.pattern.mediator.impl.ConcreteMediator;
 import com.perperon.pattern.observer.Observer;
 import com.perperon.pattern.observer.concrete.ConcreteObserver;
 import com.perperon.pattern.observer.concrete.ConcreteSubject;
@@ -430,4 +434,19 @@ class PatternApplicationTests {
         }
     }
 
+    /**
+     * 中介者模式测试
+     */
+    @Test
+    public void test19() {
+        Mediator mediator = new ConcreteMediator();
+
+        Colleague colleagueA = new ConcreteColleague("Colleague A", mediator);
+        Colleague colleagueB = new ConcreteColleague("Colleague B", mediator);
+        Colleague colleagueC = new ConcreteColleague("Colleague C", mediator);
+
+        colleagueA.send("Hello from A");
+        colleagueB.send("Hello from B");
+        colleagueC.send("Hello from C");
+    }
 }
