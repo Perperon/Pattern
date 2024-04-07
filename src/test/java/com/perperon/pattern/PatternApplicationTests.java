@@ -59,6 +59,10 @@ import com.perperon.pattern.proxy.jdk.dynamic.impl.SmsServiceImpl;
 import com.perperon.pattern.proxy.state.proxy.SmsProxy;
 import com.perperon.pattern.state.ContextState;
 import com.perperon.pattern.state.impl.StateA;
+import com.perperon.pattern.strategy.ContextStrategy;
+import com.perperon.pattern.strategy.impl.OperationAdd;
+import com.perperon.pattern.strategy.impl.OperationMultiply;
+import com.perperon.pattern.strategy.impl.OperationSubtract;
 import com.perperon.thread.ThreadLocalExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -486,5 +490,20 @@ class PatternApplicationTests {
         context.request(); // 处理A状态的业务逻辑，并转换到B状态
         context.request(); // 处理B状态的业务逻辑，并转换回A状态
         context.request(); // 再次处理A状态的业务逻辑...
+    }
+
+    /**
+     * 策略模式测试
+     */
+    @Test
+    public void test22() {
+        ContextStrategy context = new ContextStrategy(new OperationAdd());
+        System.out.println("10 + 5 = " + context.executeStrategy(10, 5));
+
+        context = new ContextStrategy(new OperationSubtract());
+        System.out.println("10 - 5 = " + context.executeStrategy(10, 5));
+
+        context = new ContextStrategy(new OperationMultiply());
+        System.out.println("10 * 5 = " + context.executeStrategy(10, 5));
     }
 }
