@@ -66,6 +66,11 @@ import com.perperon.pattern.strategy.impl.OperationSubtract;
 import com.perperon.pattern.template.ConcreteClassA;
 import com.perperon.pattern.template.ConcreteClassB;
 import com.perperon.pattern.template.TemplateClass;
+import com.perperon.pattern.visitor.Element;
+import com.perperon.pattern.visitor.Visitor;
+import com.perperon.pattern.visitor.impl.ConcreteElementA;
+import com.perperon.pattern.visitor.impl.ConcreteElementB;
+import com.perperon.pattern.visitor.impl.ConcreteVisitor;
 import com.perperon.thread.ThreadLocalExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -521,4 +526,24 @@ class PatternApplicationTests {
         a.templateMethod(); // 输出具体实现A的算法步骤
         b.templateMethod(); // 输出具体实现B的算法步骤
     }
+
+    /**
+     * 访问者模式测试
+     */
+    @Test
+        public void test24() {
+            // 创建被访问对象elementA
+            Element elementA = new ConcreteElementA();
+            // 创建被访问对象elementB
+            Element elementB = new ConcreteElementB();
+
+            // 创建访问者对象visitor
+            Visitor visitor = new ConcreteVisitor();
+
+            // 使用elementA接受访问者visitor
+            elementA.accept(visitor);
+            // 使用elementB接受访问者visitor
+            elementB.accept(visitor);
+        }
+
 }
