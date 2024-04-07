@@ -57,6 +57,8 @@ import com.perperon.pattern.proxy.jdk.dynamic.SmsService;
 import com.perperon.pattern.proxy.jdk.dynamic.factory.JdkProxyFactory;
 import com.perperon.pattern.proxy.jdk.dynamic.impl.SmsServiceImpl;
 import com.perperon.pattern.proxy.state.proxy.SmsProxy;
+import com.perperon.pattern.state.ContextState;
+import com.perperon.pattern.state.impl.StateA;
 import com.perperon.thread.ThreadLocalExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -452,6 +454,9 @@ class PatternApplicationTests {
         colleagueC.send("Hello from C");
     }
 
+    /**
+     * 备忘录模式测试
+     */
     @Test
     public void test20() {
         // 创建Originator对象
@@ -470,5 +475,16 @@ class PatternApplicationTests {
         // 从Caretaker恢复备忘录
         originator.restoreMemento(caretaker.getMemento());
         System.out.println("Originator state after restoration: " + originator.getState());
+    }
+
+    /**
+     * 状态模式测试
+     */
+    @Test
+    public void test21() {
+        ContextState context = new ContextState(new StateA());
+        context.request(); // 处理A状态的业务逻辑，并转换到B状态
+        context.request(); // 处理B状态的业务逻辑，并转换回A状态
+        context.request(); // 再次处理A状态的业务逻辑...
     }
 }
