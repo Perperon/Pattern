@@ -42,6 +42,8 @@ import com.perperon.pattern.mediator.Colleague;
 import com.perperon.pattern.mediator.Mediator;
 import com.perperon.pattern.mediator.impl.ConcreteColleague;
 import com.perperon.pattern.mediator.impl.ConcreteMediator;
+import com.perperon.pattern.memento.Caretaker;
+import com.perperon.pattern.memento.Originator;
 import com.perperon.pattern.observer.Observer;
 import com.perperon.pattern.observer.concrete.ConcreteObserver;
 import com.perperon.pattern.observer.concrete.ConcreteSubject;
@@ -448,5 +450,25 @@ class PatternApplicationTests {
         colleagueA.send("Hello from A");
         colleagueB.send("Hello from B");
         colleagueC.send("Hello from C");
+    }
+
+    @Test
+    public void test20() {
+        // 创建Originator对象
+        Originator originator = new Originator();
+        originator.setState("State A");
+        System.out.println("Originator state: " + originator.getState());
+
+        // 创建Caretaker对象并保存备忘录
+        Caretaker caretaker = new Caretaker();
+        caretaker.addMemento(originator.createMemento());
+
+        // 修改Originator的状态
+        originator.setState("State B");
+        System.out.println("Originator state after modification: " + originator.getState());
+
+        // 从Caretaker恢复备忘录
+        originator.restoreMemento(caretaker.getMemento());
+        System.out.println("Originator state after restoration: " + originator.getState());
     }
 }
