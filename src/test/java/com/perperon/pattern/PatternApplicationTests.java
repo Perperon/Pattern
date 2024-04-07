@@ -63,6 +63,9 @@ import com.perperon.pattern.strategy.ContextStrategy;
 import com.perperon.pattern.strategy.impl.OperationAdd;
 import com.perperon.pattern.strategy.impl.OperationMultiply;
 import com.perperon.pattern.strategy.impl.OperationSubtract;
+import com.perperon.pattern.template.ConcreteClassA;
+import com.perperon.pattern.template.ConcreteClassB;
+import com.perperon.pattern.template.TemplateClass;
 import com.perperon.thread.ThreadLocalExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -505,5 +508,17 @@ class PatternApplicationTests {
 
         context = new ContextStrategy(new OperationMultiply());
         System.out.println("10 * 5 = " + context.executeStrategy(10, 5));
+    }
+
+    /**
+     * 模板方法模式测试
+     */
+    @Test
+    public void test23() {
+        TemplateClass a = new ConcreteClassA();
+        TemplateClass b = new ConcreteClassB();
+
+        a.templateMethod(); // 输出具体实现A的算法步骤
+        b.templateMethod(); // 输出具体实现B的算法步骤
     }
 }
