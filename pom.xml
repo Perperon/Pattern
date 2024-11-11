@@ -81,7 +81,7 @@
                 <configuration>
                     <layout>ZIP</layout>
                     <finalName>${artifactId}</finalName>
-                    <mainClass>com.perperon.pattern.PatternApplication</mainClass>
+                    <mainClass>com.perperon.PatternApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

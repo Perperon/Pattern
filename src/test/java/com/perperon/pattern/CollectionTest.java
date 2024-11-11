@@ -22,13 +22,9 @@ public class CollectionTest {
 
     @Test
     public void test(){
-
-        String url = "jdbc:mysql://192.168.11.51:6019/mrtcloud?SSL=true";
+        String url = "jdbc:mysql://localhost:3306/mrtcloud_myzy?SSL=true";
         String username = "root";
-        String password = "#7VCg1K_19F#";
-        /*String url = "jdbc:mysql://localhost:3306/mrtcloud_myzy?SSL=true";
-        String username = "root";
-        String password = "root";*/
+        String password = "root";
 
         try {
             // 加载数据库驱动
