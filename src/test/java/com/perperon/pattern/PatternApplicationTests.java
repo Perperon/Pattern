@@ -39,10 +39,14 @@ import com.perperon.prototype.deep.Animal;
 import com.perperon.prototype.deep.Dog;
 import com.perperon.prototype.shallow.Address;
 import com.perperon.prototype.shallow.Person;
+import com.perperon.reflect.TargetObject;
 import com.perperon.thread.ThreadLocalExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Random;
 
 @SpringBootTest
@@ -324,5 +328,43 @@ class PatternApplicationTests {
         flyweight1.operation("extrinsicState1");
         flyweight2.operation("extrinsicState2");
         flyweight3.operation("extrinsicState3"); // 这个将复用flyweight1的内部状态
+    }
+
+    /**
+     * 测试反射
+     */
+    @Test
+    public void test15() throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, NoSuchFieldException {
+        Class<?> clazz = Class.forName("com.perperon.reflect.TargetObject");
+        TargetObject o = (TargetObject)clazz.newInstance();
+        /**
+         * 获取 TargetObject 类中定义的所有方法
+         */
+        Method[] methods = clazz.getDeclaredMethods();
+        for (Method method : methods) {
+            System.out.println(method.getName());
+        }
+        /**
+         * 获取指定方法并调用
+         */
+        Method publicMethod = clazz.getDeclaredMethod("publicMethod",
+                String.class);
+
+        publicMethod.invoke(o, "JavaGuide");
+        /**
+         * 获取指定参数并对参数进行修改
+         */
+        Field field = clazz.getDeclaredField("value");
+        //为了对类中的参数进行修改我们取消安全检查
+        field.setAccessible(true);
+        field.set(o, "Hello World");
+
+        /**
+         * 调用 private 方法
+         */
+        Method privateMethod = clazz.getDeclaredMethod("privateMethod");
+        //为了调用private方法我们取消安全检查
+        privateMethod.setAccessible(true);
+        privateMethod.invoke(o);
     }
 }
